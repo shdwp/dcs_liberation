@@ -6,9 +6,9 @@ import shutil
 _user_folder = None  # type: str
 
 
-def setup(user_folder: str):
+def setup():
     global _user_folder
-    _user_folder = user_folder
+    _user_folder = os.path.expanduser(os.getenv('USERPROFILE'))#user_folder
 
 
 def base_path() -> str:

@@ -56,7 +56,7 @@ cycle("", a, b)
 sys.exit(0)
 """
 
-persistency.setup(sys.argv[1])
+persistency.setup()
 dcs.planes.FlyingType.payload_dirs.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "resources\\payloads"))
 
 
