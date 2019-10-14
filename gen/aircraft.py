@@ -117,6 +117,10 @@ class AircraftConflictGenerator:
             else:
                 group.units[idx].set_client()
 
+            # Set up F-14 Client to have pre-stored alignment
+            if unit_type is F_14B:
+                group.units[idx].set_property(F_14B.Properties.INSAlignmentStored.id, True)
+
         group.points[0].tasks.append(OptReactOnThreat(OptReactOnThreat.Values.EvadeFire))
 
         if unit_type in helicopters.helicopter_map.values():
@@ -507,7 +511,7 @@ class AircraftConflictGenerator:
 
             wayp = self._add_radio_waypoint(group, self.conflict.position, WARM_START_ALTITUDE, INTERCEPTION_AIRSPEED)
             wayp.tasks.append(EngageTargets(max_distance=INTERCEPT_MAX_DISTANCE))
-            
+
             if self.conflict.is_vector:
                 self._add_radio_waypoint(group, self.conflict.tail, CAS_ALTITUDE, WARM_START_ALTITUDE)
 

@@ -54,6 +54,7 @@ PRICES = {
     M_2000C: 13,
     FA_18C_hornet: 18,
     F_15C: 20,
+    F_16C_50: 20,
     F_14B: 14,
 
     # bomber
@@ -146,6 +147,7 @@ UNIT_BY_TASK = {
         MiG_29S,
         FA_18C_hornet,
         F_15C,
+        F_16C_50,
         F_14B,
         M_2000C,
     ],
@@ -306,6 +308,7 @@ UNIT_BY_COUNTRY = {
     "USA": [
         F_5E_3,
         F_15C,
+        F_16C_50,
         F_14B,
         FA_18C_hornet,
         AJS37,
