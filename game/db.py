@@ -12,6 +12,17 @@ from dcs.unittype import *
 from dcs.unitgroup import *
 
 """
+Fix for aircraft missing liveries
+"""
+class DefaultLiveries:
+    class Default(Enum):
+        af_standard = ""
+
+OH_58D.Liveries = DefaultLiveries
+F_16C_50.Liveries = DefaultLiveries
+P_51D_30_NA.Liveries = DefaultLiveries
+
+"""
 ---------- BEGINNING OF CONFIGURATION SECTION
 """
 
