@@ -11,6 +11,7 @@ from dcs.unitgroup import *
 from dcs.unittype import *
 from dcs.task import *
 from dcs.terrain.terrain import NoParkingSlotError
+from dcs.helicopters import UH_1H
 
 SPREAD_DISTANCE_FACTOR = 1, 2
 ESCORT_ENGAGEMENT_MAX_DIST = 100000
@@ -123,7 +124,7 @@ class AircraftConflictGenerator:
 
         group.points[0].tasks.append(OptReactOnThreat(OptReactOnThreat.Values.EvadeFire))
 
-        if unit_type in helicopters.helicopter_map.values():
+        if unit_type in helicopters.helicopter_map.values() and unit_type is not UH_1H:
             print(unit_type)
             group.set_frequency(127.5)
         else:
