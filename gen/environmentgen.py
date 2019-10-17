@@ -199,7 +199,7 @@ def _gen_random_weather(weather_type=None):
         # front line smokes look silly w/o any wind
         data['wind'] = _generate_wind(1)
 
-    if data['clouds']['density'] > 0:
+    if 'density' in data['clouds']:
         # sometimes clouds are randomized way too low and need to be fixed
         data['clouds']['base'] = max(data['clouds']['base'], WEATHER_CLOUD_BASE_MIN)
     return data
