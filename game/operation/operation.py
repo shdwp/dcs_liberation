@@ -1,4 +1,5 @@
 from dcs.lua.parse import loads
+from dcs.terrain import Terrain
 
 from userdata.debriefing import *
 

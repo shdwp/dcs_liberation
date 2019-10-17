@@ -73,7 +73,16 @@ class EventMenu(Menu):
         header("Mission Menu", "title")
 
         # Mission Description
-        Label(self.frame, text="{}".format(self.event), **STYLES["mission-preview"]).grid(row=row, column=0, columnspan=5, sticky=S+EW, padx=5, pady=5)
+        Label(self.frame, text="{}".format(self.event), **STYLES["mission-preview"]).grid(row=row, column=0, columnspan=5, sticky=S+EW, padx=5)
+        row += 1
+        Label(self.frame, text="{}".format(self.event.environment_settings.start_time), **STYLES["mission-time"]).grid(
+            row=row,
+            column=0,
+            columnspan=5,
+            sticky=S + EW,
+            pady=5,
+            padx=5
+        )
         row += 1
 
         Label(self.frame, text="Amount", **STYLES["widget"]).grid(row=row, column=1, columnspan=2)

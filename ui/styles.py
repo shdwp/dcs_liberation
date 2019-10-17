@@ -13,6 +13,10 @@ YELLOW = "#BF9A46"
 RED = "#D0232E"
 BG_TITLE_COLOR = "#2D3E50"
 BG_SUBTITLE_COLOR = "#3E4F61"
+BASE_03 = "#002b36"  # background
+BASE_0 = "#839496"  # body text
+BASE_1 = "#93a1a1"
+MAGENTA = "#d33682"
 
 # Fonts
 FONT_FAMILY = "Trebuchet MS"
@@ -20,6 +24,7 @@ DEFAULT_FONT = (FONT_FAMILY, 8)
 ITALIC = (FONT_FAMILY, 8, "italic")
 BOLD_FONT = (FONT_FAMILY, 10, "bold italic")
 TITLE_FONT = (FONT_FAMILY, 16, "bold italic")
+SECONDARY_FONT = (FONT_FAMILY, 10, "italic")
 
 # List of styles
 STYLES = {}
@@ -33,6 +38,7 @@ STYLES["supstrong"] = {"font": BOLD_FONT, "bg": RED, "fg": FG_COLOR}
 STYLES["strong-grey"] = {"font": BOLD_FONT, "bg": BG_TITLE_COLOR, "fg": FG_COLOR_LIGHT}
 
 STYLES["mission-preview"] = {"font": BOLD_FONT, "bg": YELLOW, "fg": FG_COLOR}
+STYLES["mission-time"] = {"font": SECONDARY_FONT, "bg": BG_COLOR, "fg": BASE_1}
 
 STYLES["widget"] = {"bg": BG_COLOR, "fg": FG_COLOR, "padx": PADDING_X, "pady": PADDING_Y, "font": DEFAULT_FONT}
 STYLES["italic"] = {"bg": BG_COLOR, "fg": FG_COLOR, "padx": PADDING_X, "pady": PADDING_Y, "font": ITALIC}

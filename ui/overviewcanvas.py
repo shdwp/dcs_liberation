@@ -8,6 +8,7 @@ import pygame
 from theater.theatergroundobject import CATEGORY_MAP
 from ui.styles import STYLES
 from ui.window import *
+from gen import environmentgen
 
 
 EVENT_COLOR_ATTACK = (100, 100, 255)
@@ -522,6 +523,7 @@ class OverviewCanvas:
             if self. _cp_available_for_selected_event(cp):
                 event = self.selected_event_info[0]
                 event.departure_cp = cp
+                event.environment_settings = environmentgen.generate()
 
                 self.selected_event_info = None
                 self.parent.start_event(event)
