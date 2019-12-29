@@ -115,6 +115,11 @@ class ConfigurationMenu(Menu):
         Button(body, text="[github]", command=lambda: webbrowser.open_new_tab("http://github.com/Khopa"), **STYLES["widget"]).grid(row=row, column=1, sticky=E)
         row += 1
 
+        Label(body, text="Wrycu - contributions", **STYLES["widget"]).grid(row=row, column=0, sticky=W)
+        Button(body, text="[github]", command=lambda: webbrowser.open_new_tab("http://github.com/wrycu"),
+               **STYLES["widget"]).grid(row=row, column=1, sticky=E)
+        row += 1
+
         Button(body, text="Display logs", command=self.display_logs, **STYLES["btn-primary"]).grid(row=row, column=0, pady=5)
         Button(body, text="Cheat +200m", command=self.cheat_money, **STYLES["btn-danger"]).grid(row=row, column=1)
 
