@@ -77,13 +77,16 @@ class EnviromentGenerator:
 
     def _set_base_weather(self, weather):
         # clouds
-        self.mission.weather.clouds_base = weather['clouds']['base']
-        self.mission.weather.clouds_density = weather['clouds']['density']
-        self.mission.weather.clouds_thickness = weather['clouds']['thickness']
+        if 'base' in weather['clouds']:
+            self.mission.weather.clouds_base = weather['clouds']['base']
+        if 'density' in weather['clouds']:
+            self.mission.weather.clouds_density = weather['clouds']['density']
+        if 'thickness' in weather['clouds']:
+            self.mission.weather.clouds_thickness = weather['clouds']['thickness']
         # winds
         self._set_wind(weather['wind'])
         # fog
-        if weather['fog']:
+        if 'fog' in weather and 'visibility' in weather['fog'] and 'thickness' in weather['fog']:
             self.mission.weather.fog_visibility = weather['fog']['visibility']
             self.mission.weather.fog_thickness = weather['fog']['thickness']
 
