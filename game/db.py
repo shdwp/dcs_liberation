@@ -330,6 +330,7 @@ UNIT_BY_COUNTRY = {
         M_2000C,
         MiG_21Bis,
         MiG_15bis,
+        JF_17,
 
         A_10A,
         A_10C,
