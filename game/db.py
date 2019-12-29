@@ -18,9 +18,11 @@ class DefaultLiveries:
     class Default(Enum):
         af_standard = ""
 
+
 OH_58D.Liveries = DefaultLiveries
 F_16C_50.Liveries = DefaultLiveries
 P_51D_30_NA.Liveries = DefaultLiveries
+JF_17.Liveries = DefaultLiveries
 
 """
 ---------- BEGINNING OF CONFIGURATION SECTION
@@ -66,6 +68,7 @@ PRICES = {
     FA_18C_hornet: 18,
     F_15C: 20,
     F_16C_50: 20,
+    JF_17: 18,
     F_14B: 14,
 
     # bomber
@@ -161,6 +164,7 @@ UNIT_BY_TASK = {
         F_16C_50,
         F_14B,
         M_2000C,
+        JF_17,
     ],
     CAS: [
         MiG_15bis,
