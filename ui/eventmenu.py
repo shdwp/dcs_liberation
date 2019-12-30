@@ -223,6 +223,18 @@ class EventMenu(Menu):
 
             self.event.player_defending(flights)
 
+        slot_count = 0
+        for flight_details in flights.items():
+            for flight in flight_details[1:]:
+                for aircraft in flight.items():
+                    slot_count += aircraft[1][0]
+        if slot_count > len(self.game.theater.terrain.airports[self.event.from_cp.full_name].parking_slots):
+            self.error_label["text"] = "You've assigned more aircraft ({}) than the airport has parking for ({})!".format(
+                slot_count,
+                len(self.game.theater.terrain.airports[self.event.from_cp.full_name].parking_slots)
+            )
+            return
+
         self.game.initiate_event(self.event)
         EventResultsMenu(self.window, self.parent, self.game, self.event).display()
 
