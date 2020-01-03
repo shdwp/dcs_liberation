@@ -88,6 +88,11 @@ class Debriefing:
         def parse_dead_object(event):
             try:
                 append_dead_object(event["initiatorMissionID"])
+            except KeyError:
+                try:
+                    append_dead_object([x['initiatorMissionID'] for x in event.values() if 'initiatorMissionID' in x][0])
+                except Exception as e:
+                    logging.error(e)
             except Exception as e:
                 logging.error(e)
 
@@ -98,9 +103,20 @@ class Debriefing:
             except Exception as e:
                 table = parse_mutliplayer_debriefing(table_string)
 
-            events = table.get("debriefing", {}).get("events", {})
+            try:
+                events = table["debriefing"].get("events", {})
+            except KeyError:
+                events = table.get('events', {})
             for event in events.values():
-                event_type = event.get("type", None)
+                try:
+                    event_type = event["type"]
+                except KeyError:
+                    # this means we've encountered a different version of the parsed debrief.  This means we must search
+                    # for the key we want :|
+                    try:
+                        event_type = [x['type'] for x in event.values() if 'type' in x][0]
+                    except Exception as e:
+                        print("Failed to parse event - {} ({})".format(event, e))
                 if event_type in ["crash", "dead"]:
                     parse_dead_object(event)
 
@@ -125,7 +141,7 @@ class Debriefing:
 
         player = mission.country(player_name)
         enemy = mission.country(enemy_name)
-        
+
         player_units = count_groups(player.plane_group + player.vehicle_group + player.ship_group)
         enemy_units = count_groups(enemy.plane_group + enemy.vehicle_group + enemy.ship_group)
 
