@@ -152,6 +152,9 @@ class EventMenu(Menu):
         return action
 
     def start(self):
+        if type(self.event) == UnitsDeliveryEvent:
+            self.error_label["text"] = "You do not actually play a delivery mission"
+            return
         if self.awacs.get() == 1:
             self.event.is_awacs_enabled = True
             self.game.awacs_expense_commit()
