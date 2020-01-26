@@ -226,8 +226,13 @@ class EventMenu(Menu):
 
             self.event.player_defending(flights)
 
+        ignore_slots = [
+            'Pinpoint Strike',
+        ]
         slot_count = 0
         for flight_details in flights.items():
+            if flight_details[0].name in ignore_slots:
+                continue
             for flight in flight_details[1:]:
                 for aircraft in flight.items():
                     slot_count += aircraft[1][0]
