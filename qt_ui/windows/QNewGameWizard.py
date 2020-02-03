@@ -284,7 +284,7 @@ class MiscOptions(QtWidgets.QWizardPage):
         layout.addWidget(sams, 0, 1)
         layout.addWidget(QtWidgets.QLabel("Start at mid game"), 1, 0)
         layout.addWidget(midGame, 1, 1)
-        layout.addWidget(QtWidgets.QLabel("Ennemy forces multiplier"), 2, 0)
+        layout.addWidget(QtWidgets.QLabel("Enemy forces multiplier"), 2, 0)
         layout.addWidget(multiplier, 2, 1)
         self.setLayout(layout)
 
