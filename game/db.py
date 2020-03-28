@@ -119,9 +119,14 @@ PRICES = {
     AirDefence.AAA_Vulcan_M163: 5,
     AirDefence.SAM_Linebacker_M6: 10,
 
-    AirDefence.SPAAA_ZSU_23_4_Shilka: 8,
-    AirDefence.SAM_SA_9_Strela_1_9P31: 13,
-    AirDefence.SAM_SA_8_Osa_9A33: 18,
+    AirDefence.AAA_ZU_23_Closed: 2,
+    AirDefence.SPAAA_ZSU_23_4_Shilka: 4,
+    AirDefence.SAM_SA_9_Strela_1_9P31: 8,
+    AirDefence.SAM_SA_19_Tunguska_2S6: 15,
+    AirDefence.SAM_SA_6_Kub_LN_2P25: 22,
+    AirDefence.SAM_SA_8_Osa_9A33: 12,
+    AirDefence.SAM_SA_3_S_125_LN_5P73: 35,
+    AirDefence.SAM_SA_11_Buk_LN_9A310M1: 25,
 
     # ship
     CV_1143_5_Admiral_Kuznetsov: 100,
@@ -179,7 +184,6 @@ UNIT_BY_TASK = {
         Ka_50,
         SA342M,
     ],
-
     Transport: [
         IL_76MD,
         An_26B,
@@ -188,15 +192,12 @@ UNIT_BY_TASK = {
 
         C_130,
     ],
-
     Refueling: [
         IL_78M,
         KC_135,
         S_3B_Tanker,
     ],
-
     AWACS: [E_3A, A_50, ],
-
     PinpointStrike: [
         Armor.APC_BTR_80,
         Armor.APC_BTR_80,
@@ -223,17 +224,17 @@ UNIT_BY_TASK = {
         AirDefence.SAM_Linebacker_M6,
 
         AirDefence.SPAAA_ZSU_23_4_Shilka,
-        AirDefence.SPAAA_ZSU_23_4_Shilka,
-        AirDefence.SPAAA_ZSU_23_4_Shilka,
-        AirDefence.SAM_SA_9_Strela_1_9P31,
+        AirDefence.AAA_ZU_23_Closed,
         AirDefence.SAM_SA_9_Strela_1_9P31,
         AirDefence.SAM_SA_8_Osa_9A33,
+        AirDefence.SAM_SA_19_Tunguska_2S6,
+        AirDefence.SAM_SA_6_Kub_LN_2P25,
+        AirDefence.SAM_SA_3_S_125_LN_5P73,
+        AirDefence.SAM_SA_11_Buk_LN_9A310M1,
     ],
-
     Reconnaissance: [Unarmed.Transport_M818, Unarmed.Transport_Ural_375, Unarmed.Transport_UAZ_469],
     Nothing: [Infantry.Infantry_M4, Infantry.Soldier_AK, ],
     Embarking: [UH_1H, Mi_8MT, ],
-
     Carriage: [CVN_74_John_C__Stennis, LHA_1_Tarawa, CV_1143_5_Admiral_Kuznetsov, ],
     CargoTransportation: [Dry_cargo_ship_Ivanov, Bulk_cargo_ship_Yakushev, Tanker_Elnya_160, Armed_speedboat, ],
 }
@@ -246,7 +247,34 @@ SAM_BAN = [
 
     AirDefence.SAM_SA_9_Strela_1_9P31,
     AirDefence.SAM_SA_8_Osa_9A33,
+    AirDefence.SAM_SA_19_Tunguska_2S6,
+    AirDefence.SAM_SA_6_Kub_LN_2P25,
+    AirDefence.SAM_SA_8_Osa_9A33,
+    AirDefence.SAM_SA_3_S_125_LN_5P73,
+    AirDefence.SAM_SA_11_Buk_LN_9A310M1,
 ]
+
+"""
+Used to convert SAM site parts to the corresponding site
+"""
+SAM_CONVERT = {
+    AirDefence.SAM_SR_P_19: AirDefence.SAM_SA_3_S_125_LN_5P73,
+    AirDefence.SAM_SA_3_S_125_TR_SNR: AirDefence.SAM_SA_3_S_125_LN_5P73,
+    AirDefence.SAM_SA_3_S_125_LN_5P73: AirDefence.SAM_SA_3_S_125_LN_5P73,
+    AirDefence.SAM_SA_6_Kub_LN_2P25: AirDefence.SAM_SA_6_Kub_LN_2P25,
+    AirDefence.SAM_SA_6_Kub_STR_9S91: AirDefence.SAM_SA_6_Kub_LN_2P25,
+    AirDefence.SAM_SA_10_S_300PS_LN_5P85C: AirDefence.SAM_SA_10_S_300PS_LN_5P85C,
+    AirDefence.SAM_SA_10_S_300PS_SR_5N66M: AirDefence.SAM_SA_10_S_300PS_LN_5P85C,
+    AirDefence.SAM_SA_10_S_300PS_TR_30N6: AirDefence.SAM_SA_10_S_300PS_LN_5P85C,
+    AirDefence.SAM_SA_10_S_300PS_CP_54K6: AirDefence.SAM_SA_10_S_300PS_LN_5P85C,
+    AirDefence.SAM_SA_10_S_300PS_SR_64H6E: AirDefence.SAM_SA_10_S_300PS_CP_54K6,
+    'except': {
+        # this radar is shared between the two S300's. if we attempt to find a SAM site at a base and can't find one
+        #  model, we can safely assume the other was deployed
+        # well, perhaps not safely, but we'll make the assumption anyway :p
+        AirDefence.SAM_SA_10_S_300PS_TR_30N6: AirDefence.SAM_SA_10_S_300PS_CP_54K6,
+    }
+}
 
 """
 Units that will always be spawned in the air
@@ -306,6 +334,11 @@ UNIT_BY_COUNTRY = {
         AirDefence.SPAAA_ZSU_23_4_Shilka,
         AirDefence.SAM_SA_9_Strela_1_9P31,
         AirDefence.SAM_SA_8_Osa_9A33,
+        AirDefence.AAA_ZU_23_Closed,
+        AirDefence.SAM_SA_19_Tunguska_2S6,
+        AirDefence.SAM_SA_6_Kub_LN_2P25,
+        AirDefence.SAM_SA_3_S_125_LN_5P73,
+        AirDefence.SAM_SA_11_Buk_LN_9A310M1,
 
         Armor.APC_BTR_80,
         Armor.MBT_T_90,
@@ -473,7 +506,8 @@ def unit_task(unit: UnitType) -> Task:
     for task, units in UNIT_BY_TASK.items():
         if unit in units:
             return task
-
+        elif unit in SAM_CONVERT:
+            return AirDefence
     assert False
 
 

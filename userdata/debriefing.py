@@ -171,7 +171,7 @@ class Debriefing:
 
         for group in static_groups:
             identifier = group.units[0].id
-            if identifier in self._dead_units:
+            if identifier in self._dead_units and group.units[0].type != 'big_smoke':
                 logging.info("debriefing: found dead static {} ({})".format(str(group.name), identifier))
 
                 assert str(group.name)
