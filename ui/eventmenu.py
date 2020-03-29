@@ -63,7 +63,7 @@ class EventMenu(Menu):
                 client_entry.grid(column=4, row=row, sticky=E, padx=5)
                 client_entry.insert(0, "0")
                 Button(self.frame, text="+", command=self.client_plus_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=5, row=row)
-                Button(self.frame, text="-", command=self.client_minus_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=6, row=row, stick=W, padx=5)
+                Button(self.frame, text="-", command=self.client_minus_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=6, row=row, stick=W, padx=(0, 5))
             else:
                 client_entry = None
 
