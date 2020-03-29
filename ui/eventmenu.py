@@ -153,10 +153,14 @@ class EventMenu(Menu):
     def descramble_one(self, task: typing.Type[UnitType], unit_type: UnitType) -> typing.Callable:
         def action():
             entry = self.scramble_entries[task][unit_type][0]  # type: Entry
-            value = entry.get()
+            client_slots = int(self.scramble_entries[task][unit_type][1].get())
+            value = int(entry.get()) - 1
 
-            entry.delete(0, len(value))
-            entry.insert(0, str(max(int(value) - 1, 0)))
+            if client_slots > value:
+                self.client_minus_one(task, unit_type)()
+
+            entry.delete(0, END)
+            entry.insert(0, str(max(value, 0)))
 
         return action
 
@@ -169,10 +173,14 @@ class EventMenu(Menu):
     def client_plus_one(self, task: typing.Type[Task], unit_type: UnitType) -> typing.Callable:
         def action():
             entry = self.scramble_entries[task][unit_type][1]  # type: Entry
-            value = entry.get()
-            amount = int(value and value or "0")
-            entry.delete(0, END)
-            entry.insert(0, str(amount+1))
+            current_slots = int(self.scramble_entries[task][unit_type][0].get())
+            max_slots = self.base.total_units_of_type(unit_type)
+            value = int(entry.get()) + 1
+            if value <= max_slots:
+                if value > current_slots:
+                    self.scramble_one(task, unit_type)()
+                entry.delete(0, END)
+                entry.insert(0, str(value))
         return action
 
     def client_minus_one(self, task: typing.Type[UnitType], unit_type: UnitType) -> typing.Callable:
