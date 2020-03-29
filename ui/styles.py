@@ -29,7 +29,7 @@ SECONDARY_FONT = (FONT_FAMILY, 10, "italic")
 # List of styles
 STYLES = {}
 STYLES["label-frame"] = {"font": BOLD_FONT, "bg": BG_COLOR, "fg": FG_COLOR}
-STYLES["frame-wrapper"] = {"bg": BG_COLOR, "relief":"sunken"}
+STYLES["frame-wrapper"] = {"bg": BG_COLOR, "relief": "sunken"}
 
 STYLES["body"] = {"bg": BG_COLOR, "padx": 10, "pady": 10}
 STYLES["strong"] = {"font": BOLD_FONT, "bg": BG_TITLE_COLOR, "fg": FG_COLOR}
