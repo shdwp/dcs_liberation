@@ -34,7 +34,7 @@ class EventMenu(Menu):
         def header(text, style="strong"):
             nonlocal row
             head = Frame(self.frame, **STYLES["header"])
-            head.grid(row=row, column=0, sticky=N+EW, columnspan=5)
+            head.grid(row=row, column=0, sticky=N+EW, columnspan=8)
             Label(head, text=text, **STYLES[style]).grid()
             row += 1
 
@@ -55,13 +55,15 @@ class EventMenu(Menu):
             scramble_entry = Entry(self.frame, width=2)
             scramble_entry.grid(column=1, row=row, sticky=E, padx=5)
             scramble_entry.insert(0, "0")
-            Button(self.frame, text="+", command=self.scramble_half(task_type, unit_type), **STYLES["btn-primary"]).grid(column=2, row=row)
+            Button(self.frame, text="+", command=self.scramble_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=2, row=row)
+            Button(self.frame, text="-", command=self.descramble_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=3, row=row, stick=W)
 
             if client_slots:
                 client_entry = Entry(self.frame, width=2)
-                client_entry.grid(column=3, row=row, sticky=E, padx=5)
+                client_entry.grid(column=4, row=row, sticky=E, padx=5)
                 client_entry.insert(0, "0")
-                Button(self.frame, text="+", command=self.client_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=4, row=row)
+                Button(self.frame, text="+", command=self.client_plus_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=5, row=row)
+                Button(self.frame, text="-", command=self.client_minus_one(task_type, unit_type), **STYLES["btn-primary"]).grid(column=6, row=row, stick=W, padx=5)
             else:
                 client_entry = None
 
@@ -73,20 +75,20 @@ class EventMenu(Menu):
         header("Mission Menu", "title")
 
         # Mission Description
-        Label(self.frame, text="{}".format(self.event), **STYLES["mission-preview"]).grid(row=row, column=0, columnspan=5, sticky=S+EW, padx=5)
+        Label(self.frame, text="{}".format(self.event), **STYLES["mission-preview"]).grid(row=row, column=0, columnspan=8, sticky=S+EW, padx=5)
         row += 1
         Label(self.frame, text="{}".format(self.event.environment_settings.start_time), **STYLES["mission-time"]).grid(
             row=row,
             column=0,
-            columnspan=5,
+            columnspan=8,
             sticky=S + EW,
             pady=5,
             padx=5
         )
         row += 1
 
-        Label(self.frame, text="Amount", **STYLES["widget"]).grid(row=row, column=1, columnspan=2)
-        Label(self.frame, text="Client slots", **STYLES["widget"]).grid(row=row, column=3, columnspan=2)
+        Label(self.frame, text="Amount", **STYLES["widget"]).grid(row=row, column=1, columnspan=3)
+        Label(self.frame, text="Client slots", **STYLES["widget"]).grid(row=row, column=4, columnspan=3)
         row += 1
 
         for flight_task in self.event.tasks:
@@ -136,19 +138,51 @@ class EventMenu(Menu):
 
         return action
 
+    def scramble_one(self, task: typing.Type[UnitType], unit_type: UnitType) -> typing.Callable:
+        def action():
+            entry = self.scramble_entries[task][unit_type][0]  # type: Entry
+            value = entry.get()
+
+            total_units = self.base.total_units_of_type(unit_type)
+
+            entry.delete(0, END)
+            entry.insert(0, str(min(int(value) + 1, int(total_units))))
+
+        return action
+
+    def descramble_one(self, task: typing.Type[UnitType], unit_type: UnitType) -> typing.Callable:
+        def action():
+            entry = self.scramble_entries[task][unit_type][0]  # type: Entry
+            value = entry.get()
+
+            entry.delete(0, len(value))
+            entry.insert(0, str(max(int(value) - 1, 0)))
+
+        return action
+
     def add_ca_slot(self):
         value = self.ca_slot_entry.get()
         amount = int(value and value or "0")
         self.ca_slot_entry.delete(0, END)
         self.ca_slot_entry.insert(0, str(amount+1))
 
-    def client_one(self, task: typing.Type[Task], unit_type: UnitType) -> typing.Callable:
+    def client_plus_one(self, task: typing.Type[Task], unit_type: UnitType) -> typing.Callable:
         def action():
             entry = self.scramble_entries[task][unit_type][1]  # type: Entry
             value = entry.get()
             amount = int(value and value or "0")
             entry.delete(0, END)
             entry.insert(0, str(amount+1))
+        return action
+
+    def client_minus_one(self, task: typing.Type[UnitType], unit_type: UnitType) -> typing.Callable:
+        def action():
+            entry = self.scramble_entries[task][unit_type][1]  # type: Entry
+            value = entry.get()
+
+            entry.delete(0, len(value))
+            entry.insert(0, str(max(int(value) - 1, 0)))
+
         return action
 
     def start(self):
